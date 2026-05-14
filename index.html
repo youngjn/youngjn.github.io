@@ -391,13 +391,23 @@
         </div>
       </div>
       <div id="privacy-lucko" class="privacy-content" style="display:none;">
-        <p>Luck-O does not collect, store, or share any personal information. The app does not require account creation and does not transmit any data from your device.</p>
-        <h3 style="font-size:15px; font-weight:600; margin:16px 0 6px;">Third-Party Advertising</h3>
-        <p>Luck-O may display advertisements provided by third-party ad networks (such as Google AdMob). These services may collect and use certain data — including device identifiers, IP address, and general usage information — to serve relevant ads.</p>
-        <p>For more information, please refer to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Google's Privacy Policy</a>.</p>
-        <h3 style="font-size:15px; font-weight:600; margin:16px 0 6px;">Your Choices</h3>
-        <p>You can limit ad tracking on your device through your iOS settings under <strong>Settings &gt; Privacy &amp; Security &gt; Tracking</strong>. You may also reset your advertising identifier at any time.</p>
-        <p><em>Last updated: May 2026</em></p>
+        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for Luck-O</h3>
+        <p><em>Last Updated: April 20, 2026</em></p>
+        <p>This Privacy Policy describes how Luck-O (hereinafter referred to as the "App") protects your personal information. We prioritize your privacy and strictly comply with relevant privacy laws.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">1. Information Collection and Use</h4>
+        <p>Luck-O itself does not directly collect, store, or transmit any of your personal information to our servers. The App does not require user registration, nor does it ask for personal identifiers such as your name, email address, or phone number. All core data generated while using the App is stored locally on your device. However, we use third-party services for advertising which may collect information used to identify you.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">2. Advertising and Third-Party Services</h4>
+        <p>The App uses Google AdMob to display advertisements. As a third-party vendor, Google AdMob uses advertising identifiers (such as Apple's IDFA), IP addresses, and similar technologies to serve non-personalized or personalized ads based on your usage.</p>
+        <p><strong>For iOS Users (App Tracking Transparency):</strong> We will request your permission before tracking your activity across other companies' apps and websites for the purpose of personalized advertising. You can manage or revoke this permission at any time in your device's settings (<strong>Settings &gt; Privacy &amp; Security &gt; Tracking</strong>).</p>
+        <p>For more information on how Google collects, uses, and protects your data, please review the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Google Privacy Policy</a>.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">3. Device Permissions</h4>
+        <p>The App may request certain device permissions (e.g., notifications, camera) to provide specific in-app features. These permissions are used strictly for functional purposes within the App. We do not collect or transmit any data accessed through these permissions. You can revoke these permissions at any time through your device settings.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">4. Changes to This Privacy Policy</h4>
+        <p>We may update our Privacy Policy from time to time due to changes in regulations or App updates. We will notify you of any changes by posting the new Privacy Policy on this page or through App update release notes.</p>
       </div>
 
       <div class="app-card privacy-toggle" data-target="privacy-keeep" style="cursor:pointer;">
@@ -408,10 +418,43 @@
         </div>
       </div>
       <div id="privacy-keeep" class="privacy-content" style="display:none;">
-        <p>keeep does not collect, store, or share any personal information. All saved links are stored locally on your device. The app does not require account creation and does not transmit any data from your device.</p>
-        <p>keeep does not display advertisements and does not use any third-party analytics or tracking services.</p>
-        <p>If you have any questions about our privacy practices, please reach out via the contact email above.</p>
-        <p><em>Last updated: May 2026</em></p>
+        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for keeep</h3>
+        <p><em>Effective Date: April 23, 2026</em></p>
+        <p>At keeep, we believe that your data belongs to you. This Privacy Policy explains how our application handles information when you use our wishlist management services, including our Safari Share Extension.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">1. Information Collection and Use</h4>
+        <p><strong>Local Data Storage</strong></p>
+        <p>keeep is designed with a "privacy-first" architecture. All items you save—including URLs, product titles, and images—are stored locally on your device using Apple's SwiftData framework.</p>
+        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+          <li><strong>App Groups:</strong> We use App Groups to allow the Safari Share Extension to securely pass URLs to the main app container. This data remains on your physical device.</li>
+          <li><strong>CloudKit (Optional):</strong> If you have iCloud enabled on your device, your wishlist data may be synced across your own devices via Apple's iCloud service. We do not have access to this data; it is encrypted and managed by Apple.</li>
+        </ul>
+        <p><strong>Metadata Extraction</strong></p>
+        <p>When you save a URL, the app uses the LPMetadataProvider API to fetch a preview (title and image) of the website.</p>
+        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+          <li>This request is made directly from your device to the website's server.</li>
+          <li>keeep does not route these requests through any third-party servers or our own servers.</li>
+        </ul>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">2. Third-Party Services</h4>
+        <p>We do not use third-party analytics, tracking, or advertising SDKs.</p>
+        <p>However, because keeep allows you to browse saved links via an in-app browser (SFSafariViewController), the websites you visit may collect their own data (cookies, IP addresses, etc.) as if you were browsing in Safari. We recommend reviewing the privacy policies of the websites you save to your wishlist.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">3. Data Retention and Deletion</h4>
+        <p>You have full control over your data.</p>
+        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+          <li>You can delete individual items from your wishlist at any time using the swipe-to-delete gesture.</li>
+          <li>Uninstalling the app will remove all locally stored data associated with keeep unless it has been synced to your personal iCloud storage.</li>
+        </ul>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">4. Children's Privacy</h4>
+        <p>Our service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children. Since all data is stored locally on your device, we have no way of knowing who is using the app.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">5. Changes to This Privacy Policy</h4>
+        <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy within the app or on our official distribution page.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">6. Contact Us</h4>
+        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <a href="mailto:zero.june@outlook.com" style="color:var(--accent);">zero.june@outlook.com</a>.</p>
       </div>
 
       <div class="app-card privacy-toggle" data-target="privacy-verto" style="cursor:pointer;">
