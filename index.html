@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none';">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
   <title>Zzzero Lab — Support</title>
   <style>
     :root {
@@ -192,6 +197,26 @@
       color: var(--text);
     }
 
+    /* Privacy Content */
+    .privacy-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 12px;
+      margin-top: -4px;
+    }
+
+    .privacy-content p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .privacy-content p:last-child {
+      margin-bottom: 0;
+    }
+
     /* Responsive */
     @media (max-width: 480px) {
       header {
@@ -231,20 +256,27 @@
     <!-- Apps -->
     <section id="apps">
       <h2>Our Apps</h2>
-      <a class="app-card" href="https://apps.apple.com/app/luck-o/id6761208614" target="_blank" rel="noopener">
+      <a class="app-card" href="https://apps.apple.com/app/luck-o/id6761208614" target="_blank" rel="noopener noreferrer">
         <div class="app-icon"><img src="assets/luck-o-icon.png" alt="Luck-O icon"></div>
         <div class="app-info">
           <h3>Luck-O</h3>
           <span>Random number generator for lottery picks &amp; more</span>
         </div>
       </a>
-      <a class="app-card" href="https://apps.apple.com/us/app/keeep-someday/id6763459470" target="_blank" rel="noopener">
+      <a class="app-card" href="https://apps.apple.com/us/app/keeep-someday/id6763459470" target="_blank" rel="noopener noreferrer">
         <div class="app-icon"><img src="assets/keeep-icon.png" alt="keeep icon"></div>
         <div class="app-info">
           <h3>keeep</h3>
-          <span>Minimal visual wishlist manager for Safari &bull; CA$0.99</span>
+          <span>Simple link archive for Safari &bull; Free</span>
         </div>
       </a>
+      <div class="app-card" style="opacity: 0.6;">
+        <div class="app-icon"><img src="assets/vert-o-icon.png" alt="vert-o icon"></div>
+        <div class="app-info">
+          <h3>vert-o</h3>
+          <span>Simple unit converter &bull; Coming Soon</span>
+        </div>
+      </div>
       <div class="app-card" style="opacity: 0.6;">
         <div class="app-icon"><img src="assets/fuuu-icon.png" alt="fuuu icon"></div>
         <div class="app-info">
@@ -315,12 +347,12 @@
 
       <div class="faq-item">
         <h3>What is keeep?</h3>
-        <p>keeep is a minimal, visual wishlist manager. Save product links from Safari and turn them into clean, organized cards — no more cluttered tabs or lost links.</p>
+        <p>keeep is a simple link archive for Safari. Save links and keep them organized — no more cluttered tabs or lost pages.</p>
       </div>
 
       <div class="faq-item">
         <h3>How much does keeep cost?</h3>
-        <p>keeep is a one-time purchase of CA$0.99. No subscriptions, no in-app purchases.</p>
+        <p>keeep is completely free. No subscriptions, no in-app purchases.</p>
       </div>
 
       <div class="faq-item">
@@ -349,18 +381,83 @@
     <!-- Privacy -->
     <section id="privacy">
       <h2>Privacy Policy</h2>
-      <p>Zzzero Lab apps are designed with your privacy in mind. We do not directly collect, store, or share any personal information.</p>
-      <p>Our apps do not require account creation and do not transmit any personal data from your device to our servers.</p>
+      <p>Tap an app icon to view its privacy policy.</p>
 
-      <h3 style="font-size:15px; font-weight:600; margin:16px 0 6px;">Third-Party Advertising</h3>
-      <p>Our apps may display advertisements provided by third-party ad networks (such as Google AdMob). These services may collect and use certain data — including device identifiers, IP address, and general usage information — to serve relevant ads. This data collection is governed by the respective privacy policies of those third-party providers.</p>
-      <p>For more information, please refer to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:var(--accent);">Google's Privacy Policy</a>.</p>
+      <div class="app-card privacy-toggle" data-target="privacy-lucko" style="cursor:pointer;">
+        <div class="app-icon"><img src="assets/luck-o-icon.png" alt="Luck-O icon"></div>
+        <div class="app-info">
+          <h3>Luck-O</h3>
+          <span>View Privacy Policy</span>
+        </div>
+      </div>
+      <div id="privacy-lucko" class="privacy-content" style="display:none;">
+        <p>Luck-O does not collect, store, or share any personal information. The app does not require account creation and does not transmit any data from your device.</p>
+        <h3 style="font-size:15px; font-weight:600; margin:16px 0 6px;">Third-Party Advertising</h3>
+        <p>Luck-O may display advertisements provided by third-party ad networks (such as Google AdMob). These services may collect and use certain data — including device identifiers, IP address, and general usage information — to serve relevant ads.</p>
+        <p>For more information, please refer to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Google's Privacy Policy</a>.</p>
+        <h3 style="font-size:15px; font-weight:600; margin:16px 0 6px;">Your Choices</h3>
+        <p>You can limit ad tracking on your device through your iOS settings under <strong>Settings &gt; Privacy &amp; Security &gt; Tracking</strong>. You may also reset your advertising identifier at any time.</p>
+        <p><em>Last updated: May 2026</em></p>
+      </div>
 
-      <h3 style="font-size:15px; font-weight:600; margin:16px 0 6px;">Your Choices</h3>
-      <p>You can limit ad tracking on your device through your iOS settings under <strong>Settings &gt; Privacy &amp; Security &gt; Tracking</strong>. You may also reset your advertising identifier at any time.</p>
+      <div class="app-card privacy-toggle" data-target="privacy-keeep" style="cursor:pointer;">
+        <div class="app-icon"><img src="assets/keeep-icon.png" alt="keeep icon"></div>
+        <div class="app-info">
+          <h3>keeep</h3>
+          <span>View Privacy Policy</span>
+        </div>
+      </div>
+      <div id="privacy-keeep" class="privacy-content" style="display:none;">
+        <p>keeep does not collect, store, or share any personal information. All saved links are stored locally on your device. The app does not require account creation and does not transmit any data from your device.</p>
+        <p>keeep does not display advertisements and does not use any third-party analytics or tracking services.</p>
+        <p>If you have any questions about our privacy practices, please reach out via the contact email above.</p>
+        <p><em>Last updated: May 2026</em></p>
+      </div>
 
-      <p>If you have any questions about our privacy practices, please reach out via the contact email above.</p>
-      <p><em>Last updated: April 2026</em></p>
+      <div class="app-card privacy-toggle" data-target="privacy-verto" style="cursor:pointer;">
+        <div class="app-icon"><img src="assets/vert-o-icon.png" alt="vert-o icon"></div>
+        <div class="app-info">
+          <h3>vert-o</h3>
+          <span>View Privacy Policy</span>
+        </div>
+      </div>
+      <div id="privacy-verto" class="privacy-content" style="display:none;">
+        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for vert-o</h3>
+        <p><em>Effective Date: May 14, 2026</em></p>
+        <p>This privacy policy applies to the vert-o app (hereby referred to as "Application") for mobile devices created by Youngjun Jung (hereby referred to as "Service Provider") as an Ad-Supported service. This service is provided "AS IS".</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">1. Information Collection and Use</h4>
+        <p>While the Service Provider does not directly collect, store, or transmit any personal information or usage data, the Application uses third-party services that may collect information used to identify you.</p>
+        <p>The information collected by third-party providers may include:</p>
+        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+          <li><strong>Device Identifiers:</strong> Such as the Advertising Identifier (IDFA on iOS).</li>
+          <li><strong>Usage Data:</strong> Information on how you interact with advertisements within the Application.</li>
+          <li><strong>Coarse Location:</strong> General location data (e.g., city or country) derived from your IP address to provide relevant localized ads.</li>
+          <li><strong>Diagnostic Data:</strong> Crash logs and performance metrics to ensure the stability of the advertising SDK.</li>
+        </ul>
+        <p>All unit conversion processes are performed locally on your device. The Service Provider does not have access to any data you enter into the Application.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">2. Third-Party Services</h4>
+        <p>The Application uses Google AdMob to serve advertisements. These third-party services may use cookies, web beacons, and other tracking technologies to collect information about your activities across different applications and websites to provide you with targeted advertisements.</p>
+        <p>You can find the privacy policy of the third-party service provider used by the Application here: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Google AdMob Privacy Policy</a>.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">3. Advertising and Tracking (iOS)</h4>
+        <p>In compliance with Apple's App Tracking Transparency (ATT) framework, the Application will ask for your permission to track your activity across other companies' apps and websites for advertising purposes. You can opt-out of personalized advertisements at any time through your device's privacy settings.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">4. Internet Connectivity</h4>
+        <p>The Application requires an active internet connection to load and display advertisements. While the core unit conversion functionality can operate offline, features related to ads will be disabled without connectivity.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">5. Children's Privacy</h4>
+        <p>The Service Provider does not knowingly collect personally identifiable information from children under 13 years of age. AdMob may serve advertisements to users; however, the Service Provider configures the ads to be appropriate for a general audience.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">6. Changes to This Privacy Policy</h4>
+        <p>The Service Provider may update this Privacy Policy from time to time. You are advised to review this page periodically for any changes. The Service Provider will notify you of any changes by posting the new Privacy Policy on this page.</p>
+
+        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">7. Contact Us</h4>
+        <p>If you have any questions or suggestions about this Privacy Policy, do not hesitate to contact the Service Provider at <a href="mailto:zero.june@outlook.com" style="color:var(--accent);">zero.june@outlook.com</a>.</p>
+      </div>
+
+      <p style="margin-top:20px; font-size:13px; color:var(--muted);">If you have any questions about our privacy practices, please reach out via the contact email above.</p>
     </section>
 
     <footer>
@@ -368,6 +465,24 @@
     </footer>
 
   </div>
+
+  <script>
+    document.querySelectorAll('.privacy-toggle').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var targetId = this.getAttribute('data-target');
+        var target = document.getElementById(targetId);
+        if (target.style.display === 'none') {
+          // Close all others
+          document.querySelectorAll('.privacy-content').forEach(function(el) {
+            el.style.display = 'none';
+          });
+          target.style.display = 'block';
+        } else {
+          target.style.display = 'none';
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
