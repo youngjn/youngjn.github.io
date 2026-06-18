@@ -8,22 +8,19 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none';">
   <meta name="referrer" content="no-referrer">
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()">
-  <title>Zzzero Lab — Support</title>
+  <title>Zzzero Lab</title>
   <style>
     :root {
       --bg: #fafafa;
       --text: #1a1a1a;
-      --muted: #666;
+      --muted: #888;
       --border: #e5e5e5;
       --accent: #0071e3;
       --card-bg: #fff;
+      --sidebar-w: 260px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -31,493 +28,540 @@
       color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    .container {
-      max-width: 640px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* Header */
-    header {
-      padding: 48px 0 32px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-
-    header h1 {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    header p {
-      color: var(--muted);
-      font-size: 15px;
-      margin-top: 6px;
-    }
-
-    /* Navigation */
-    nav {
+    /* Layout */
+    .layout {
       display: flex;
-      justify-content: center;
-      gap: 24px;
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
+      height: 100vh;
     }
 
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      overflow-y: auto;
     }
 
-    nav a:hover {
-      color: var(--text);
-    }
-
-    /* Sections */
-    section {
-      padding: 40px 0;
+    .sidebar-header {
+      padding: 28px 20px 20px;
       border-bottom: 1px solid var(--border);
     }
 
-    section:last-of-type {
-      border-bottom: none;
-    }
-
-    section h2 {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 16px;
+    .sidebar-header h1 {
+      font-size: 18px;
+      font-weight: 700;
       letter-spacing: -0.3px;
     }
 
-    section p {
+    .sidebar-header p {
+      font-size: 12px;
       color: var(--muted);
-      font-size: 15px;
-      margin-bottom: 12px;
+      margin-top: 2px;
     }
 
-    section p:last-child {
-      margin-bottom: 0;
+    .sidebar-nav {
+      padding: 12px 0;
+      flex: 1;
+      overflow-y: auto;
     }
 
-    /* App Card */
-    .app-card {
+    .sidebar-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      padding: 8px 20px 4px;
+    }
+
+    .nav-item {
       display: flex;
       align-items: center;
-      gap: 16px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 12px;
+      gap: 10px;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: background 0.15s;
       text-decoration: none;
       color: inherit;
-      transition: box-shadow 0.2s;
+      font-size: 14px;
     }
 
-    .app-card:hover {
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    .nav-item:hover {
+      background: rgba(0,0,0,0.04);
     }
 
-    .app-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
+    .nav-item.active {
+      background: rgba(0,113,227,0.08);
+      color: var(--accent);
+    }
+
+    .nav-item.wip {
+      opacity: 0.5;
+    }
+
+    .nav-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
       overflow: hidden;
       flex-shrink: 0;
     }
 
-    .app-icon img {
+    .nav-icon img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .app-info h3 {
-      font-size: 16px;
-      font-weight: 600;
+    .nav-label {
+      font-weight: 500;
     }
 
-    .app-info span {
-      font-size: 13px;
+    .nav-badge {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--muted);
+      background: var(--border);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
       color: var(--muted);
     }
 
-    /* FAQ */
+    .sidebar-footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .sidebar-footer a:hover {
+      color: var(--text);
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 40px 48px;
+    }
+
+    .panel {
+      display: none;
+      max-width: 680px;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .panel-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .panel-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .panel-title h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .panel-title p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .app-store-btn {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: var(--text);
+      color: #fff;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .app-store-btn:hover {
+      opacity: 0.8;
+    }
+
+    .wip-badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 6px 12px;
+      background: var(--border);
+      color: var(--muted);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* Content sections inside panels */
+    .content-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .content-section h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .content-section h4 {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 16px 0 6px;
+    }
+
+    .content-section p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .content-section ul {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 8px 0 8px 20px;
+    }
+
+    .content-section ul li {
+      margin-bottom: 4px;
+    }
+
+    .content-section a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .content-section a:hover {
+      text-decoration: underline;
+    }
+
     .faq-item {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
-    .faq-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .faq-item h3 {
-      font-size: 15px;
+    .faq-item h4 {
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 4px;
+      color: var(--text);
     }
 
     .faq-item p {
       font-size: 14px;
+      color: var(--muted);
     }
 
-    /* Contact */
-    .contact-link {
+    /* Contact panel */
+    .contact-email {
       display: inline-block;
       color: var(--accent);
-      text-decoration: none;
       font-size: 15px;
       font-weight: 500;
+      text-decoration: none;
     }
 
-    .contact-link:hover {
+    .contact-email:hover {
       text-decoration: underline;
     }
 
-    /* Footer */
-    footer {
-      padding: 32px 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-    }
+    /* Mobile */
+    @media (max-width: 768px) {
+      body { overflow: auto; height: auto; }
 
-    footer a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      color: var(--text);
-    }
-
-    /* Privacy Content */
-    .privacy-content {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 12px;
-      margin-top: -4px;
-    }
-
-    .privacy-content p {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .privacy-content p:last-child {
-      margin-bottom: 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 480px) {
-      header {
-        padding: 36px 0 24px;
+      .layout {
+        flex-direction: column;
+        height: auto;
       }
 
-      header h1 {
-        font-size: 24px;
+      .sidebar {
+        width: 100%;
+        min-width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: none;
+        overflow: visible;
       }
 
-      section {
-        padding: 32px 0;
+      .sidebar-nav {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 8px 12px;
+        gap: 4px;
       }
 
-      section h2 {
-        font-size: 18px;
+      .sidebar-section-title {
+        width: 100%;
+        padding: 4px 8px;
+      }
+
+      .nav-item {
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 13px;
+      }
+
+      .nav-badge { display: none; }
+
+      .main {
+        padding: 24px 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+<div class="layout">
 
-    <header>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
       <h1>Zzzero Lab</h1>
       <p>App Support</p>
-    </header>
+    </div>
 
-    <nav>
-      <a href="#apps">Apps</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-      <a href="#privacy">Privacy</a>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-title">Apps</div>
+      <div class="nav-item active" data-panel="luck-o">
+        <div class="nav-icon"><img src="assets/luck-o-icon.png" alt="Luck-O"></div>
+        <span class="nav-label">Luck-O</span>
+      </div>
+      <div class="nav-item" data-panel="keeep">
+        <div class="nav-icon"><img src="assets/keeep-icon.png" alt="keeep"></div>
+        <span class="nav-label">keeep</span>
+      </div>
+      <div class="nav-item" data-panel="vert-o">
+        <div class="nav-icon"><img src="assets/vert-o-icon.png" alt="vert-o"></div>
+        <span class="nav-label">vert-o</span>
+      </div>
+      <div class="nav-item" data-panel="ta-da">
+        <div class="nav-icon"><img src="assets/ta-da-icon.png" alt="ta-da"></div>
+        <span class="nav-label">ta-da</span>
+      </div>
+      <div class="nav-item" data-panel="sorted">
+        <div class="nav-icon"><img src="assets/sorted-icon.png" alt="Sorted"></div>
+        <span class="nav-label">Sorted</span>
+      </div>
+      <div class="nav-item wip" data-panel="doodlog">
+        <div class="nav-icon"><img src="assets/doodlog-icon.png" alt="doodlog"></div>
+        <span class="nav-label">doodlog</span>
+        <span class="nav-badge">WIP</span>
+      </div>
+      <div class="nav-item wip" data-panel="moj">
+        <div class="nav-icon"><img src="assets/moj-icon.png" alt="moj"></div>
+        <span class="nav-label">moj</span>
+        <span class="nav-badge">WIP</span>
+      </div>
+      <div class="nav-item wip" data-panel="showtime">
+        <div class="nav-icon"><img src="assets/showtime-icon.png" alt="Showtime"></div>
+        <span class="nav-label">Showtime</span>
+        <span class="nav-badge">WIP</span>
+      </div>
+
+      <div class="sidebar-section-title" style="margin-top:12px;">General</div>
+      <div class="nav-item" data-panel="contact">
+        <span class="nav-label">Contact</span>
+      </div>
     </nav>
 
-    <!-- Apps -->
-    <section id="apps">
-      <h2>Our Apps</h2>
-      <a class="app-card" href="https://apps.apple.com/app/luck-o/id6761208614" target="_blank" rel="noopener noreferrer">
-        <div class="app-icon"><img src="assets/luck-o-icon.png" alt="Luck-O icon"></div>
-        <div class="app-info">
-          <h3>Luck-O</h3>
-          <span>Random number generator for lottery picks &amp; more</span>
-        </div>
-      </a>
-      <a class="app-card" href="https://apps.apple.com/us/app/keeep-someday/id6763459470" target="_blank" rel="noopener noreferrer">
-        <div class="app-icon"><img src="assets/keeep-icon.png" alt="keeep icon"></div>
-        <div class="app-info">
-          <h3>keeep</h3>
-          <span>Simple link archive for Safari &bull; Free</span>
-        </div>
-      </a>
-      <a class="app-card" href="https://apps.apple.com/ca/app/vert-o-minimal-unit-converter/id6769196962" target="_blank" rel="noopener noreferrer">
-        <div class="app-icon"><img src="assets/vert-o-icon.png" alt="vert-o icon"></div>
-        <div class="app-info">
-          <h3>vert-o</h3>
-          <span>Minimal unit converter</span>
-        </div>
-      </a>
-      <a class="app-card" href="https://apps.apple.com/us/app/ta-da-daily-log-receipt/id6766369028" target="_blank" rel="noopener noreferrer">
-        <div class="app-icon"><img src="assets/ta-da-icon.png" alt="ta-da icon"></div>
-        <div class="app-info">
-          <h3>ta-da</h3>
-          <span>Daily log receipt</span>
-        </div>
-      </a>
-      <div class="app-card" style="opacity: 0.6;">
-        <div class="app-icon"><img src="assets/doodlog-icon.png" alt="doodlog icon"></div>
-        <div class="app-info">
-          <h3>doodlog</h3>
-          <span>Work in Progress</span>
+    <div class="sidebar-footer">
+      &copy; 2026 Zzzero Lab
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Luck-O -->
+    <div class="panel active" id="panel-luck-o">
+      <div class="panel-header">
+        <div class="panel-icon"><img src="assets/luck-o-icon.png" alt="Luck-O icon"></div>
+        <div class="panel-title">
+          <h2>Luck-O</h2>
+          <p>Random number generator for lottery picks &amp; more</p>
         </div>
       </div>
-      <a class="app-card" href="https://apps.apple.com/us/app/sorted-categorized-clipboard/id6776378861" target="_blank" rel="noopener noreferrer">
-        <div class="app-icon"><img src="assets/sorted-icon.png" alt="sorted icon"></div>
-        <div class="app-info">
-          <h3>Sorted</h3>
-          <span>Categorized clipboard &bull; $4.99</span>
+      <a class="app-store-btn" href="https://apps.apple.com/app/luck-o/id6761208614" target="_blank" rel="noopener noreferrer">View on App Store</a>
+
+      <div class="content-section">
+        <h3>FAQ</h3>
+        <div class="faq-item">
+          <h4>Is Luck-O free to use?</h4>
+          <p>Yes. Luck-O is completely free with no in-app purchases or subscriptions.</p>
         </div>
-      </a>
-      <div class="app-card" style="opacity: 0.6;">
-        <div class="app-icon"><img src="assets/moj-icon.png" alt="moj icon"></div>
-        <div class="app-info">
-          <h3>moj</h3>
-          <span>Emoji vlog &bull; Work in Progress</span>
+        <div class="faq-item">
+          <h4>Can I win real money with Luck-O?</h4>
+          <p>No. Luck-O is for entertainment purposes only. It does not sell lottery tickets or involve real-money gambling of any kind.</p>
         </div>
-      </div>
-      <div class="app-card" style="opacity: 0.6;">
-        <div class="app-icon"><img src="assets/showtime-icon.png" alt="showtime icon"></div>
-        <div class="app-info">
-          <h3>Showtime</h3>
-          <span>Movie pomodoro timer &bull; Work in Progress</span>
+        <div class="faq-item">
+          <h4>Is Luck-O affiliated with any official lottery?</h4>
+          <p>No. Luck-O is an independent app and is not affiliated with, endorsed by, or associated with any official lottery organization.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq">
-      <h2>Frequently Asked Questions</h2>
-
-      <div class="faq-item">
-        <h3>Is Luck-O free to use?</h3>
-        <p>Yes. Luck-O is completely free with no in-app purchases or subscriptions.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Can I win real money with Luck-O?</h3>
-        <p>No. Luck-O is for entertainment purposes only. It does not sell lottery tickets or involve real-money gambling of any kind.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Is Luck-O affiliated with any official lottery?</h3>
-        <p>No. Luck-O is an independent app and is not affiliated with, endorsed by, or associated with any official lottery organization.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Does Luck-O collect my personal data?</h3>
-        <p>No. We do not collect any personal data. Your privacy is fully respected.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>What devices are supported?</h3>
-        <p>Luck-O is available on iPhone and requires iOS 26.0 or later.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>The app is crashing or not working properly.</h3>
-        <p>Please make sure you are running the latest version from the App Store. If the issue persists, contact us using the email below and include your device model and iOS version.</p>
-      </div>
-
-      <hr style="border:none; border-top:1px solid var(--border); margin:28px 0;">
-
-      <h2 style="margin-bottom:16px;">keeep</h2>
-
-      <div class="faq-item">
-        <h3>What is keeep?</h3>
-        <p>keeep is a simple link archive for Safari. Save links and keep them organized — no more cluttered tabs or lost pages.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>How much does keeep cost?</h3>
-        <p>keeep is completely free. No subscriptions, no in-app purchases.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>How do I save items?</h3>
-        <p>Use the built-in Share Extension in Safari. Tap the share button on any product page and select keeep to save it instantly.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Does keeep collect my data?</h3>
-        <p>No. All your saved items are stored locally on your device. We do not collect or transmit any personal data.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Can I view saved products without leaving the app?</h3>
-        <p>Yes. Tap any card to open the product page in keeep's built-in browser.</p>
-      </div>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact">
-      <h2>Contact Us</h2>
-      <p>Have a question, bug report, or feature request? We'd love to hear from you.</p>
-      <a class="contact-link" href="mailto:zero.june@outlook.com">zero.june@outlook.com</a>
-    </section>
-
-    <!-- Privacy -->
-    <section id="privacy">
-      <h2>Privacy Policy</h2>
-      <p>Tap an app icon to view its privacy policy.</p>
-
-      <div class="app-card privacy-toggle" data-target="privacy-lucko" style="cursor:pointer;">
-        <div class="app-icon"><img src="assets/luck-o-icon.png" alt="Luck-O icon"></div>
-        <div class="app-info">
-          <h3>Luck-O</h3>
-          <span>View Privacy Policy</span>
+        <div class="faq-item">
+          <h4>Does Luck-O collect my personal data?</h4>
+          <p>No. We do not collect any personal data. Your privacy is fully respected.</p>
+        </div>
+        <div class="faq-item">
+          <h4>What devices are supported?</h4>
+          <p>Luck-O is available on iPhone and requires iOS 26.0 or later.</p>
+        </div>
+        <div class="faq-item">
+          <h4>The app is crashing or not working properly.</h4>
+          <p>Please make sure you are running the latest version from the App Store. If the issue persists, contact us using the email below and include your device model and iOS version.</p>
         </div>
       </div>
-      <div id="privacy-lucko" class="privacy-content" style="display:none;">
-        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for Luck-O</h3>
+
+      <div class="content-section">
+        <h3>Privacy Policy</h3>
         <p><em>Last Updated: April 20, 2026</em></p>
         <p>This Privacy Policy describes how Luck-O (hereinafter referred to as the "App") protects your personal information. We prioritize your privacy and strictly comply with relevant privacy laws.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">1. Information Collection and Use</h4>
+        <h4>1. Information Collection and Use</h4>
         <p>Luck-O itself does not directly collect, store, or transmit any of your personal information to our servers. The App does not require user registration, nor does it ask for personal identifiers such as your name, email address, or phone number. All core data generated while using the App is stored locally on your device. However, we use third-party services for advertising which may collect information used to identify you.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">2. Advertising and Third-Party Services</h4>
+        <h4>2. Advertising and Third-Party Services</h4>
         <p>The App uses Google AdMob to display advertisements. As a third-party vendor, Google AdMob uses advertising identifiers (such as Apple's IDFA), IP addresses, and similar technologies to serve non-personalized or personalized ads based on your usage.</p>
         <p><strong>For iOS Users (App Tracking Transparency):</strong> We will request your permission before tracking your activity across other companies' apps and websites for the purpose of personalized advertising. You can manage or revoke this permission at any time in your device's settings (<strong>Settings &gt; Privacy &amp; Security &gt; Tracking</strong>).</p>
-        <p>For more information on how Google collects, uses, and protects your data, please review the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Google Privacy Policy</a>.</p>
+        <p>For more information on how Google collects, uses, and protects your data, please review the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">3. Device Permissions</h4>
+        <h4>3. Device Permissions</h4>
         <p>The App may request certain device permissions (e.g., notifications, camera) to provide specific in-app features. These permissions are used strictly for functional purposes within the App. We do not collect or transmit any data accessed through these permissions. You can revoke these permissions at any time through your device settings.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">4. Changes to This Privacy Policy</h4>
+        <h4>4. Changes to This Privacy Policy</h4>
         <p>We may update our Privacy Policy from time to time due to changes in regulations or App updates. We will notify you of any changes by posting the new Privacy Policy on this page or through App update release notes.</p>
       </div>
+    </div>
 
-      <div class="app-card privacy-toggle" data-target="privacy-keeep" style="cursor:pointer;">
-        <div class="app-icon"><img src="assets/keeep-icon.png" alt="keeep icon"></div>
-        <div class="app-info">
-          <h3>keeep</h3>
-          <span>View Privacy Policy</span>
+    <!-- keeep -->
+    <div class="panel" id="panel-keeep">
+      <div class="panel-header">
+        <div class="panel-icon"><img src="assets/keeep-icon.png" alt="keeep icon"></div>
+        <div class="panel-title">
+          <h2>keeep</h2>
+          <p>Simple link archive for Safari &bull; Free</p>
         </div>
       </div>
-      <div id="privacy-keeep" class="privacy-content" style="display:none;">
-        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for keeep</h3>
+      <a class="app-store-btn" href="https://apps.apple.com/us/app/keeep-someday/id6763459470" target="_blank" rel="noopener noreferrer">View on App Store</a>
+
+      <div class="content-section">
+        <h3>FAQ</h3>
+        <div class="faq-item">
+          <h4>What is keeep?</h4>
+          <p>keeep is a simple link archive for Safari. Save links and keep them organized — no more cluttered tabs or lost pages.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How much does keeep cost?</h4>
+          <p>keeep is completely free. No subscriptions, no in-app purchases.</p>
+        </div>
+        <div class="faq-item">
+          <h4>How do I save items?</h4>
+          <p>Use the built-in Share Extension in Safari. Tap the share button on any product page and select keeep to save it instantly.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Does keeep collect my data?</h4>
+          <p>No. All your saved items are stored locally on your device. We do not collect or transmit any personal data.</p>
+        </div>
+        <div class="faq-item">
+          <h4>Can I view saved products without leaving the app?</h4>
+          <p>Yes. Tap any card to open the product page in keeep's built-in browser.</p>
+        </div>
+      </div>
+
+      <div class="content-section">
+        <h3>Privacy Policy</h3>
         <p><em>Effective Date: April 23, 2026</em></p>
         <p>At keeep, we believe that your data belongs to you. This Privacy Policy explains how our application handles information when you use our wishlist management services, including our Safari Share Extension.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">1. Information Collection and Use</h4>
+        <h4>1. Information Collection and Use</h4>
         <p><strong>Local Data Storage</strong></p>
         <p>keeep is designed with a "privacy-first" architecture. All items you save—including URLs, product titles, and images—are stored locally on your device using Apple's SwiftData framework.</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li><strong>App Groups:</strong> We use App Groups to allow the Safari Share Extension to securely pass URLs to the main app container. This data remains on your physical device.</li>
           <li><strong>CloudKit (Optional):</strong> If you have iCloud enabled on your device, your wishlist data may be synced across your own devices via Apple's iCloud service. We do not have access to this data; it is encrypted and managed by Apple.</li>
         </ul>
         <p><strong>Metadata Extraction</strong></p>
         <p>When you save a URL, the app uses the LPMetadataProvider API to fetch a preview (title and image) of the website.</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li>This request is made directly from your device to the website's server.</li>
           <li>keeep does not route these requests through any third-party servers or our own servers.</li>
         </ul>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">2. Third-Party Services</h4>
+        <h4>2. Third-Party Services</h4>
         <p>We do not use third-party analytics, tracking, or advertising SDKs.</p>
         <p>However, because keeep allows you to browse saved links via an in-app browser (SFSafariViewController), the websites you visit may collect their own data (cookies, IP addresses, etc.) as if you were browsing in Safari. We recommend reviewing the privacy policies of the websites you save to your wishlist.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">3. Data Retention and Deletion</h4>
+        <h4>3. Data Retention and Deletion</h4>
         <p>You have full control over your data.</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li>You can delete individual items from your wishlist at any time using the swipe-to-delete gesture.</li>
           <li>Uninstalling the app will remove all locally stored data associated with keeep unless it has been synced to your personal iCloud storage.</li>
         </ul>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">4. Children's Privacy</h4>
+        <h4>4. Children's Privacy</h4>
         <p>Our service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children. Since all data is stored locally on your device, we have no way of knowing who is using the app.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">5. Changes to This Privacy Policy</h4>
+        <h4>5. Changes to This Privacy Policy</h4>
         <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy within the app or on our official distribution page.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">6. Contact Us</h4>
-        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <a href="mailto:zero.june@outlook.com" style="color:var(--accent);">zero.june@outlook.com</a>.</p>
+        <h4>6. Contact Us</h4>
+        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <a href="mailto:zero.june@outlook.com">zero.june@outlook.com</a>.</p>
       </div>
+    </div>
 
-      <div class="app-card privacy-toggle" data-target="privacy-tada" style="cursor:pointer;">
-        <div class="app-icon"><img src="assets/ta-da-icon.png" alt="ta-da icon"></div>
-        <div class="app-info">
-          <h3>ta-da</h3>
-          <span>View Privacy Policy</span>
+    <!-- vert-o -->
+    <div class="panel" id="panel-vert-o">
+      <div class="panel-header">
+        <div class="panel-icon"><img src="assets/vert-o-icon.png" alt="vert-o icon"></div>
+        <div class="panel-title">
+          <h2>vert-o</h2>
+          <p>Minimal unit converter</p>
         </div>
       </div>
-      <div id="privacy-tada" class="privacy-content" style="display:none;">
-        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for ta-da</h3>
-        <p><em>Last Updated: June 09, 2026</em></p>
-        <p>Welcome to ta-da (the "Application"), an anti-to-do list application developed by Zzzero Lab ("we," "us," or "our"). Your privacy is incredibly important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our Application.</p>
+      <a class="app-store-btn" href="https://apps.apple.com/ca/app/vert-o-minimal-unit-converter/id6769196962" target="_blank" rel="noopener noreferrer">View on App Store</a>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">1. No Server-Side Data Collection (100% Local Storage)</h4>
-        <p>The Application is designed to respect your privacy.</p>
-        <p><strong>Your Content:</strong> All lists, tasks, achievements, text, and sticker decorations you create within the Application are processed and stored exclusively on your mobile device using local storage.</p>
-        <p><strong>Your Photos:</strong> The Application requires permission to access your device's photo library or gallery. This permission is used strictly for two purposes: to save your generated receipt images directly to your device, and to allow you to select photos from your gallery to create custom stickers within the Application. Any photos you choose to import or receipts you save are processed entirely on your local device. We do not view, host, transmit, or store any of your personal photos or data on external servers.</p>
-
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">2. Third-Party Services (Google AdMob)</h4>
-        <p>While we do not collect your personal data directly, the Application integrates third-party software development kits (SDKs) to serve advertisements. Specifically, we use Google AdMob to display banner ads.</p>
-        <p>Google AdMob may automatically collect and process certain device information to personalize ads and analyze ad performance. This data may include:</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
-          <li>Device identifiers (e.g., Advertising ID, IDFA)</li>
-          <li>IP address and rough location data</li>
-          <li>Device make, model, operating system, and network provider</li>
-          <li>Ad interaction data (clicks, impressions)</li>
-        </ul>
-        <p>This data is processed directly by Google according to their own privacy policies. You can learn more about how Google uses your data by visiting: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Google Privacy &amp; Terms</a>.</p>
-
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">3. Children's Privacy</h4>
-        <p>Our Application does not knowingly collect personal identifiable information from children under the age of 13. Since we do not collect any user data on a server, we do not store personal profiles of any users, including children. However, the third-party ad networks we use may collect data as described above. If you are a parent or guardian and believe that your child has provided personal information, please contact us.</p>
-
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">4. Changes to This Privacy Policy</h4>
-        <p>We may update our Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last Updated" date. You are advised to review this Privacy Policy periodically for any changes.</p>
-
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">5. Contact Us</h4>
-        <p>If you have any questions or suggestions about this Privacy Policy, please do not hesitate to contact us at <a href="mailto:zero.june@outlook.com" style="color:var(--accent);">zero.june@outlook.com</a>.</p>
-      </div>
-
-      <div class="app-card privacy-toggle" data-target="privacy-verto" style="cursor:pointer;">
-        <div class="app-icon"><img src="assets/vert-o-icon.png" alt="vert-o icon"></div>
-        <div class="app-info">
-          <h3>vert-o</h3>
-          <span>View Privacy Policy</span>
-        </div>
-      </div>
-      <div id="privacy-verto" class="privacy-content" style="display:none;">
-        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for vert-o</h3>
+      <div class="content-section">
+        <h3>Privacy Policy</h3>
         <p><em>Effective Date: May 14, 2026</em></p>
         <p>This privacy policy applies to the vert-o app (hereby referred to as "Application") for mobile devices created by Youngjun Jung (hereby referred to as "Service Provider") as an Ad-Supported service. This service is provided "AS IS".</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">1. Information Collection and Use</h4>
+        <h4>1. Information Collection and Use</h4>
         <p>While the Service Provider does not directly collect, store, or transmit any personal information or usage data, the Application uses third-party services that may collect information used to identify you.</p>
         <p>The information collected by third-party providers may include:</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li><strong>Device Identifiers:</strong> Such as the Advertising Identifier (IDFA on iOS).</li>
           <li><strong>Usage Data:</strong> Information on how you interact with advertisements within the Application.</li>
           <li><strong>Coarse Location:</strong> General location data (e.g., city or country) derived from your IP address to provide relevant localized ads.</li>
@@ -525,82 +569,147 @@
         </ul>
         <p>All unit conversion processes are performed locally on your device. The Service Provider does not have access to any data you enter into the Application.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">2. Third-Party Services</h4>
+        <h4>2. Third-Party Services</h4>
         <p>The Application uses Google AdMob to serve advertisements. These third-party services may use cookies, web beacons, and other tracking technologies to collect information about your activities across different applications and websites to provide you with targeted advertisements.</p>
-        <p>You can find the privacy policy of the third-party service provider used by the Application here: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Google AdMob Privacy Policy</a>.</p>
+        <p>You can find the privacy policy of the third-party service provider used by the Application here: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google AdMob Privacy Policy</a>.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">3. Advertising and Tracking (iOS)</h4>
+        <h4>3. Advertising and Tracking (iOS)</h4>
         <p>In compliance with Apple's App Tracking Transparency (ATT) framework, the Application will ask for your permission to track your activity across other companies' apps and websites for advertising purposes. You can opt-out of personalized advertisements at any time through your device's privacy settings.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">4. Internet Connectivity</h4>
+        <h4>4. Internet Connectivity</h4>
         <p>The Application requires an active internet connection to load and display advertisements. While the core unit conversion functionality can operate offline, features related to ads will be disabled without connectivity.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">5. Children's Privacy</h4>
+        <h4>5. Children's Privacy</h4>
         <p>The Service Provider does not knowingly collect personally identifiable information from children under 13 years of age. AdMob may serve advertisements to users; however, the Service Provider configures the ads to be appropriate for a general audience.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">6. Changes to This Privacy Policy</h4>
+        <h4>6. Changes to This Privacy Policy</h4>
         <p>The Service Provider may update this Privacy Policy from time to time. You are advised to review this page periodically for any changes. The Service Provider will notify you of any changes by posting the new Privacy Policy on this page.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">7. Contact Us</h4>
-        <p>If you have any questions or suggestions about this Privacy Policy, do not hesitate to contact the Service Provider at <a href="mailto:zero.june@outlook.com" style="color:var(--accent);">zero.june@outlook.com</a>.</p>
+        <h4>7. Contact Us</h4>
+        <p>If you have any questions or suggestions about this Privacy Policy, do not hesitate to contact the Service Provider at <a href="mailto:zero.june@outlook.com">zero.june@outlook.com</a>.</p>
       </div>
+    </div>
 
-      <div class="app-card privacy-toggle" data-target="privacy-sorted" style="cursor:pointer;">
-        <div class="app-icon"><img src="assets/sorted-icon.png" alt="sorted icon"></div>
-        <div class="app-info">
-          <h3>Sorted</h3>
-          <span>View Privacy Policy</span>
+    <!-- ta-da -->
+    <div class="panel" id="panel-ta-da">
+      <div class="panel-header">
+        <div class="panel-icon"><img src="assets/ta-da-icon.png" alt="ta-da icon"></div>
+        <div class="panel-title">
+          <h2>ta-da</h2>
+          <p>Daily log receipt</p>
         </div>
       </div>
-      <div id="privacy-sorted" class="privacy-content" style="display:none;">
-        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for Sorted</h3>
+      <a class="app-store-btn" href="https://apps.apple.com/us/app/ta-da-daily-log-receipt/id6766369028" target="_blank" rel="noopener noreferrer">View on App Store</a>
+
+      <div class="content-section">
+        <h3>Privacy Policy</h3>
+        <p><em>Last Updated: June 09, 2026</em></p>
+        <p>Welcome to ta-da (the "Application"), an anti-to-do list application developed by Zzzero Lab ("we," "us," or "our"). Your privacy is incredibly important to us. This Privacy Policy explains how we collect, use, and protect your information when you use our Application.</p>
+
+        <h4>1. No Server-Side Data Collection (100% Local Storage)</h4>
+        <p>The Application is designed to respect your privacy.</p>
+        <p><strong>Your Content:</strong> All lists, tasks, achievements, text, and sticker decorations you create within the Application are processed and stored exclusively on your mobile device using local storage.</p>
+        <p><strong>Your Photos:</strong> The Application requires permission to access your device's photo library or gallery. This permission is used strictly for two purposes: to save your generated receipt images directly to your device, and to allow you to select photos from your gallery to create custom stickers within the Application. Any photos you choose to import or receipts you save are processed entirely on your local device. We do not view, host, transmit, or store any of your personal photos or data on external servers.</p>
+
+        <h4>2. Third-Party Services (Google AdMob)</h4>
+        <p>While we do not collect your personal data directly, the Application integrates third-party software development kits (SDKs) to serve advertisements. Specifically, we use Google AdMob to display banner ads.</p>
+        <p>Google AdMob may automatically collect and process certain device information to personalize ads and analyze ad performance. This data may include:</p>
+        <ul>
+          <li>Device identifiers (e.g., Advertising ID, IDFA)</li>
+          <li>IP address and rough location data</li>
+          <li>Device make, model, operating system, and network provider</li>
+          <li>Ad interaction data (clicks, impressions)</li>
+        </ul>
+        <p>This data is processed directly by Google according to their own privacy policies. You can learn more about how Google uses your data by visiting: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy &amp; Terms</a>.</p>
+
+        <h4>3. Children's Privacy</h4>
+        <p>Our Application does not knowingly collect personal identifiable information from children under the age of 13. Since we do not collect any user data on a server, we do not store personal profiles of any users, including children. However, the third-party ad networks we use may collect data as described above. If you are a parent or guardian and believe that your child has provided personal information, please contact us.</p>
+
+        <h4>4. Changes to This Privacy Policy</h4>
+        <p>We may update our Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last Updated" date. You are advised to review this Privacy Policy periodically for any changes.</p>
+
+        <h4>5. Contact Us</h4>
+        <p>If you have any questions or suggestions about this Privacy Policy, please do not hesitate to contact us at <a href="mailto:zero.june@outlook.com">zero.june@outlook.com</a>.</p>
+      </div>
+    </div>
+
+    <!-- Sorted -->
+    <div class="panel" id="panel-sorted">
+      <div class="panel-header">
+        <div class="panel-icon"><img src="assets/sorted-icon.png" alt="Sorted icon"></div>
+        <div class="panel-title">
+          <h2>Sorted</h2>
+          <p>Categorized clipboard &bull; $4.99</p>
+        </div>
+      </div>
+      <a class="app-store-btn" href="https://apps.apple.com/us/app/sorted-categorized-clipboard/id6776378861" target="_blank" rel="noopener noreferrer">View on App Store</a>
+
+      <div class="content-section">
+        <h3>Privacy Policy</h3>
         <p><em>Effective Date: June 6, 2026</em></p>
         <p>Youngjun Jung ("we," "our," or "us") operates the mobile application "Sorted" (the "App"). We are committed to protecting your privacy and ensuring that your personal information is handled in a safe and responsible manner. This Privacy Policy outlines our practices regarding the collection, use, and disclosure of information when you use our App.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">1. Information We Collect</h4>
+        <h4>1. Information We Collect</h4>
         <p>We do not collect any personal data from users of the Sorted app. The App does not require the submission of any personal information, and no data is collected through the use of the App.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">2. Use of Information</h4>
+        <h4>2. Use of Information</h4>
         <p>Since we do not collect any personal data, we do not use any personal information for any purpose.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">3. Sharing of Information</h4>
+        <h4>3. Sharing of Information</h4>
         <p>We do not share any personal data with third parties because we do not collect any personal data.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">4. Data Retention</h4>
+        <h4>4. Data Retention</h4>
         <p>As we do not collect any personal data, we do not retain any user information.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">5. Security</h4>
+        <h4>5. Security</h4>
         <p>We are committed to ensuring that your information is secure. However, since we do not collect or store any personal data, there are no security measures required for personal data protection.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">6. Children's Privacy</h4>
+        <h4>6. Children's Privacy</h4>
         <p>Our App does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13. If you are a parent or guardian and you are aware that your child has provided us with personal data, please contact us. If we become aware that we have collected personal data from children without verification of parental consent, we take steps to remove that information from our servers.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">7. Changes to This Privacy Policy</h4>
+        <h4>7. Changes to This Privacy Policy</h4>
         <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">8. Contact Us</h4>
-        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <a href="mailto:zero.june@outlook.com" style="color:var(--accent);">zero.june@outlook.com</a>.</p>
+        <h4>8. Contact Us</h4>
+        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at <a href="mailto:zero.june@outlook.com">zero.june@outlook.com</a>.</p>
         <p style="margin-top:12px; font-size:13px;">By using the Sorted app, you signify your acceptance of this Privacy Policy. If you do not agree to this policy, please do not use our App. Your continued use of the App following the posting of changes to this policy will be deemed your acceptance of those changes.</p>
         <p style="margin-top:8px; font-size:12px; color:var(--muted);"><em>This Privacy Policy is compliant with the Apple App Store requirements, the General Data Protection Regulation (GDPR), and the California Consumer Privacy Act (CCPA).</em></p>
       </div>
+    </div>
 
-      <div class="app-card privacy-toggle" data-target="privacy-moj" style="cursor:pointer;">
-        <div class="app-icon"><img src="assets/moj-icon.png" alt="moj icon"></div>
-        <div class="app-info">
-          <h3>moj</h3>
-          <span>View Privacy Policy</span>
+    <!-- doodlog -->
+    <div class="panel" id="panel-doodlog">
+      <div class="panel-header">
+        <div class="panel-icon"><img src="assets/doodlog-icon.png" alt="doodlog icon"></div>
+        <div class="panel-title">
+          <h2>doodlog</h2>
+          <p>Work in Progress</p>
         </div>
       </div>
-      <div id="privacy-moj" class="privacy-content" style="display:none;">
-        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for Moj</h3>
+      <span class="wip-badge">Coming Soon</span>
+    </div>
+
+    <!-- moj -->
+    <div class="panel" id="panel-moj">
+      <div class="panel-header">
+        <div class="panel-icon"><img src="assets/moj-icon.png" alt="moj icon"></div>
+        <div class="panel-title">
+          <h2>moj</h2>
+          <p>Emoji vlog</p>
+        </div>
+      </div>
+      <span class="wip-badge">Coming Soon</span>
+
+      <div class="content-section">
+        <h3>Privacy Policy</h3>
         <p><em>Effective Date: 2026-06-12</em></p>
         <p>Youngjun Jung ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use the Moj app. Please read this policy carefully. If you do not agree with the terms, please do not access the application.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Information We Collect</h4>
+        <h4>Information We Collect</h4>
         <p><strong>Personal Data</strong></p>
         <p>We do not collect personally identifiable information unless you voluntarily provide it to us.</p>
         <p><strong>Data Collected Automatically</strong></p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li><strong>Camera and Microphone:</strong> Access is required to create vlogs. This data is used solely for the app's functionality and is not stored on our servers.</li>
           <li><strong>Photos:</strong> Access is needed to allow you to add existing images to your vlogs.</li>
           <li><strong>Reminders:</strong> Access is used to help you schedule and manage your vlog creation.</li>
@@ -608,55 +717,60 @@
         <p><strong>Advertising Data</strong></p>
         <p>Our app integrates with AdMob, an advertising SDK, which may collect data such as device identifiers, IP addresses, and usage data to provide personalized ads.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">How We Use Information</h4>
+        <h4>How We Use Information</h4>
         <p>We use the information we collect to:</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li>Facilitate and improve your use of the app.</li>
           <li>Provide personalized content and advertising.</li>
           <li>Communicate with you about updates or changes to the app.</li>
         </ul>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Third-Party Services</h4>
+        <h4>Third-Party Services</h4>
         <p>Our app uses third-party services, including AdMob, which may collect information used to identify you. We recommend reviewing their privacy policies to understand their data collection practices.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Data Sharing</h4>
+        <h4>Data Sharing</h4>
         <p>We do not sell, trade, or otherwise transfer your personal information to third parties, except as required by law or to protect our rights.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Data Retention</h4>
+        <h4>Data Retention</h4>
         <p>We retain your data only as long as necessary to provide the app's functionality or as required by law. Once data is no longer needed, we will delete it using reasonable measures.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Security</h4>
+        <h4>Security</h4>
         <p>We implement appropriate technical and organizational measures to protect your data from unauthorized access, use, or disclosure. However, no method of transmission over the internet is 100% secure.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Children's Privacy</h4>
+        <h4>Children's Privacy</h4>
         <p>Our app is not intended for children under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will take steps to delete it.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Your Rights</h4>
+        <h4>Your Rights</h4>
         <p>Under GDPR and CCPA, you have the right to access, correct, or delete your personal information. You may also object to data processing or request data portability. To exercise these rights, please contact us at the email below.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Changes to This Policy</h4>
+        <h4>Changes to This Policy</h4>
         <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page. You are advised to review this policy periodically for any changes.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Contact Us</h4>
-        <p>If you have any questions or concerns about this Privacy Policy, please contact us at <a href="mailto:zero.june@outlook.com" style="color:var(--accent);">zero.june@outlook.com</a>.</p>
+        <h4>Contact Us</h4>
+        <p>If you have any questions or concerns about this Privacy Policy, please contact us at <a href="mailto:zero.june@outlook.com">zero.june@outlook.com</a>.</p>
       </div>
+    </div>
 
-      <div class="app-card privacy-toggle" data-target="privacy-showtime" style="cursor:pointer;">
-        <div class="app-icon"><img src="assets/showtime-icon.png" alt="showtime icon"></div>
-        <div class="app-info">
-          <h3>Showtime</h3>
-          <span>View Privacy Policy</span>
+    <!-- Showtime -->
+    <div class="panel" id="panel-showtime">
+      <div class="panel-header">
+        <div class="panel-icon"><img src="assets/showtime-icon.png" alt="Showtime icon"></div>
+        <div class="panel-title">
+          <h2>Showtime</h2>
+          <p>Movie pomodoro timer</p>
         </div>
       </div>
-      <div id="privacy-showtime" class="privacy-content" style="display:none;">
-        <h3 style="font-size:16px; font-weight:600; margin-bottom:12px;">Privacy Policy for Showtime: Movie Pomodoro Timer</h3>
+      <span class="wip-badge">Coming Soon</span>
+
+      <div class="content-section">
+        <h3>Privacy Policy</h3>
         <p><em>Effective Date: 2026-06-18</em></p>
         <p>Youngjun Jung ("we," "us," or "our") operates the mobile application "Showtime: Movie Pomodoro Timer" ("App"). This Privacy Policy informs you of our policies regarding the collection, use, and disclosure of personal data when you use our App and the choices you have associated with that data.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Information We Collect</h4>
+        <h4>Information We Collect</h4>
         <p><strong>Personal Data</strong></p>
         <p>While using our App, we may ask you to provide us with certain personally identifiable information, including but not limited to:</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li><strong>Reminders:</strong> To facilitate focus sessions and notifications.</li>
           <li><strong>Tracking Information:</strong> Collected through App Tracking Transparency for personalized advertising.</li>
           <li><strong>Purchases:</strong> Data related to in-app purchases for processing and verification.</li>
@@ -665,9 +779,9 @@
         <p><strong>Usage Data</strong></p>
         <p>We may collect information on how the App is accessed and used. This Usage Data may include information such as your device's Internet Protocol address (e.g., IP address), device type, operating system version, the configuration of the App when utilizing our service, and other diagnostic data.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">How We Use Information</h4>
+        <h4>How We Use Information</h4>
         <p>We use the collected data for various purposes:</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li>To provide and maintain our App.</li>
           <li>To notify you about changes to our App.</li>
           <li>To allow you to participate in interactive features of our App when you choose to do so.</li>
@@ -678,62 +792,74 @@
           <li>To provide you with news, special offers, and general information about other goods, services, and events which we offer unless you have opted not to receive such information.</li>
         </ul>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Third-Party Services</h4>
+        <h4>Third-Party Services</h4>
         <p>Our App uses third-party services that may collect information used to identify you. These services include:</p>
         <p><strong>Google AdMob:</strong> Used for displaying rewarded ads. AdMob may collect device information, usage data, and other identifiers for ad personalization and analytics.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Data Sharing</h4>
+        <h4>Data Sharing</h4>
         <p>We do not sell or rent your personal data to third parties. We may share your information with:</p>
-        <ul style="color:var(--muted); font-size:14px; margin:8px 0 8px 20px;">
+        <ul>
           <li><strong>Service Providers:</strong> To monitor and analyze the use of our App.</li>
           <li><strong>Legal Authorities:</strong> If required by law or in response to valid requests by public authorities.</li>
         </ul>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Data Retention</h4>
+        <h4>Data Retention</h4>
         <p>We will retain your personal data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use your data to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our legal agreements and policies.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Security</h4>
+        <h4>Security</h4>
         <p>The security of your data is important to us, but remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your personal data, we cannot guarantee its absolute security.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Children's Privacy</h4>
+        <h4>Children's Privacy</h4>
         <p>Our App does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under 13. If you are a parent or guardian and you are aware that your child has provided us with personal data, please contact us. If we become aware that we have collected personal data from children without verification of parental consent, we take steps to remove that information from our servers.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Your Rights</h4>
+        <h4>Your Rights</h4>
         <p>Under the GDPR, if you are a resident of the European Economic Area (EEA), you have certain data protection rights. You can request access, correction, deletion, or restriction of your personal data. Under the CCPA, California residents have the right to request access to their data, deletion of their data, and to know whether their data is sold.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Changes to This Policy</h4>
+        <h4>Changes to This Policy</h4>
         <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page. You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
 
-        <h4 style="font-size:14px; font-weight:600; margin:16px 0 6px;">Contact Us</h4>
-        <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:zero.june@outlook.com" style="color:var(--accent);">zero.june@outlook.com</a>.</p>
+        <h4>Contact Us</h4>
+        <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:zero.june@outlook.com">zero.june@outlook.com</a>.</p>
       </div>
+    </div>
 
-      <p style="margin-top:20px; font-size:13px; color:var(--muted);">If you have any questions about our privacy practices, please reach out via the contact email above.</p>
-    </section>
+    <!-- Contact -->
+    <div class="panel" id="panel-contact">
+      <div class="panel-title" style="margin-bottom:20px;">
+        <h2>Contact Us</h2>
+      </div>
+      <p style="font-size:15px; color:var(--muted); margin-bottom:16px;">Have a question, bug report, or feature request? We'd love to hear from you.</p>
+      <a class="contact-email" href="mailto:zero.june@outlook.com">zero.june@outlook.com</a>
+    </div>
 
-    <footer>
-      <p>&copy; 2026 Zzzero Lab. All rights reserved.</p>
-    </footer>
+  </main>
+</div>
 
-  </div>
+<script>
+  document.querySelectorAll('.nav-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var panelId = this.getAttribute('data-panel');
+      if (!panelId) return;
 
-  <script>
-    document.querySelectorAll('.privacy-toggle').forEach(function(card) {
-      card.addEventListener('click', function() {
-        var targetId = this.getAttribute('data-target');
-        var target = document.getElementById(targetId);
-        if (target.style.display === 'none') {
-          // Close all others
-          document.querySelectorAll('.privacy-content').forEach(function(el) {
-            el.style.display = 'none';
-          });
-          target.style.display = 'block';
-        } else {
-          target.style.display = 'none';
-        }
+      // Update active nav
+      document.querySelectorAll('.nav-item').forEach(function(el) {
+        el.classList.remove('active');
       });
+      this.classList.add('active');
+
+      // Show panel
+      document.querySelectorAll('.panel').forEach(function(el) {
+        el.classList.remove('active');
+      });
+      var panel = document.getElementById('panel-' + panelId);
+      if (panel) {
+        panel.classList.add('active');
+        // Scroll main content to top
+        document.querySelector('.main').scrollTop = 0;
+      }
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>
